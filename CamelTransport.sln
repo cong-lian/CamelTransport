@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CamelTransport.Tests", "CamelTransport.Tests\CamelTransport.Tests.csproj", "{76902F61-BD9C-4452-88B7-1879A1E6A566}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CamelTransport", "CamelTransport\CamelTransport.csproj", "{DE1CD6FB-B91F-4A10-AC44-BEDFE906F91B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{76902F61-BD9C-4452-88B7-1879A1E6A566}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76902F61-BD9C-4452-88B7-1879A1E6A566}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76902F61-BD9C-4452-88B7-1879A1E6A566}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76902F61-BD9C-4452-88B7-1879A1E6A566}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE1CD6FB-B91F-4A10-AC44-BEDFE906F91B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE1CD6FB-B91F-4A10-AC44-BEDFE906F91B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE1CD6FB-B91F-4A10-AC44-BEDFE906F91B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE1CD6FB-B91F-4A10-AC44-BEDFE906F91B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7E6C34AB-C305-4DEF-99E0-EC98CFA71287}
+	EndGlobalSection
+EndGlobal
