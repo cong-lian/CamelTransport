@@ -11,29 +11,95 @@ public class Camel(int capacity)
         if (numberOfBananas <= 0) throw new ArgumentException("Number of bananas must be a positive integer");
         if (totalMiles <= 0) throw new ArgumentException("Total miles must be a positive integer");
 
+        // case 1: too few bananas and too many miles
         if (numberOfBananas < BananasPerMile * totalMiles) return 0;
-        // one run
-        if (numberOfBananas <= Capacity) return numberOfBananas - BananasPerMile * totalMiles;
 
-        // more than one run
+        var numberOfRoundTrips = (int)Math.Ceiling((double)numberOfBananas / Capacity);
+        var numberOfBananasAtLastTrip = numberOfBananas % Capacity;
+
+        // case 2: can carry all bananas in 1 trip
+        if (numberOfRoundTrips == 1) return numberOfBananas - BananasPerMile * totalMiles;
+
+        // case 3: can not carry all bananas in 1 trip
         var remainingBananas = numberOfBananas;
         var remainingMiles = totalMiles;
 
-        while (remainingMiles > 0)
+        do
         {
-            var numberOfRoundTrips = remainingBananas / Capacity;
-            var milesToTake = Capacity / (2 * numberOfRoundTrips - 1);
-
-            if (milesToTake >= remainingMiles)
+            // no need to return
+            if (numberOfRoundTrips == 1)
             {
-                remainingBananas = Capacity * numberOfRoundTrips - (2 * numberOfRoundTrips - 1) * remainingMiles * BananasPerMile;
-                break;
+                remainingBananas -= remainingMiles * BananasPerMile; break;
             }
+            // fully loaded in last trip
+            if (numberOfBananasAtLastTrip == 0)
+            {
+                var milesToTake = Capacity / (2 * numberOfRoundTrips - 1);
 
-            remainingMiles -= milesToTake;
-            remainingBananas = Capacity * numberOfRoundTrips - milesToTake * (2 * numberOfRoundTrips - 1) * BananasPerMile;
-        }
+                // reached destination
+                if (milesToTake >= remainingMiles)
+                {
+                    remainingBananas = Capacity * numberOfRoundTrips - (2 * numberOfRoundTrips - 1) * remainingMiles * BananasPerMile;
+                    break;
+                }
+                // not yet reached destination
+                else
+                {
+                    remainingBananas = Capacity * numberOfRoundTrips - (2 * numberOfRoundTrips - 1) * milesToTake * BananasPerMile;
+                    remainingMiles -= milesToTake;
+                }
+            }
+            // not fully loaded in last trip
+            else
+            {
+                var milesToTake = Capacity / (2 * numberOfRoundTrips - 1);
 
-        return remainingBananas;
+                // it is worth to make the last trip
+                if (numberOfBananasAtLastTrip > 2 * remainingMiles * BananasPerMile || numberOfBananasAtLastTrip > 2 * milesToTake * BananasPerMile)
+                {
+                    numberOfRoundTrips--;
+
+                    // reached destination
+                    if (milesToTake >= remainingMiles)
+                    {
+                        remainingBananas = Capacity * numberOfRoundTrips - (2 * numberOfRoundTrips - 1) * remainingMiles * BananasPerMile;
+                        remainingBananas += numberOfBananasAtLastTrip - 2 * remainingMiles * BananasPerMile;
+                        break;
+                    }
+                    // not yet reached destination
+                    else
+                    {
+                        remainingBananas = Capacity * numberOfRoundTrips - (2 * numberOfRoundTrips - 1) * milesToTake * BananasPerMile;
+                        remainingBananas += numberOfBananasAtLastTrip - 2 * milesToTake * BananasPerMile;
+                        remainingMiles -= milesToTake;
+                    }
+                }
+                // it is better to abandon the last trip
+                else
+                {
+                    numberOfRoundTrips--;
+                    milesToTake = Capacity / (2 * numberOfRoundTrips - 1);
+
+                    // reached destination
+                    if (milesToTake >= remainingMiles)
+                    {
+                        remainingBananas = Capacity * numberOfRoundTrips - (2 * numberOfRoundTrips - 1) * remainingMiles * BananasPerMile;
+                        break;
+                    }
+                    // not yet reached destination
+                    else
+                    {
+                        remainingBananas = Capacity * numberOfRoundTrips - (2 * numberOfRoundTrips - 1) * milesToTake * BananasPerMile;
+                        remainingMiles -= milesToTake;
+                    }
+                }
+            }
+            numberOfRoundTrips = (int)Math.Ceiling((double)remainingBananas / Capacity);
+            numberOfBananasAtLastTrip = remainingBananas % Capacity;
+
+            // till reached the destination or no bananas anymore
+        } while (remainingMiles > 0 && remainingBananas > 0);
+
+        return remainingBananas <= 0 ? 0 : remainingBananas;
     }
 }
